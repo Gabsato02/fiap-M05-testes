@@ -16,8 +16,8 @@ const movieMock: Movie = {
   trailerUrl: "https://www.youtube.com/embed/YoHD9XEInc0",
 };
 
-describe("Snapshots do componente movie-card", () => {
-    it("deve corresponder ao snapshot", () => {
+describe("Movie Card snapshot", () => {
+    it("should match the snapshot", () => {
         const { container } = render(
             <AuthProvider>
                 <FavoritesProvider>
@@ -26,6 +26,24 @@ describe("Snapshots do componente movie-card", () => {
             </AuthProvider>
         );
 
+        expect(container).toMatchSnapshot();
+    })
+
+    it("should match the snapshot when a movie has multiple genres", () => {
+        const movieMockWithMultipleGenres: Movie = {
+            ...movieMock,
+            genre: ["Sci-Fi", "Action", "Adventure", "Drama"],
+        };
+
+        const { container } = render(
+            <AuthProvider>
+                <FavoritesProvider>
+                    <MovieCard movie={movieMockWithMultipleGenres} />
+                </FavoritesProvider>
+            </AuthProvider>
+        );
+
+        // Gera um snapshot do componente renderizado e compara com o snapshot salvo
         expect(container).toMatchSnapshot();
     })
 })
